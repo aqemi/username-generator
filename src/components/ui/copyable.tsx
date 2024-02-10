@@ -3,12 +3,7 @@ import { useId, type MouseEventHandler } from 'react';
 import { ClipboardCopy } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipContext,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipContext } from '@/components/ui/tooltip';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
@@ -32,9 +27,10 @@ const Copyable = React.forwardRef<HTMLInputElement, InputProps>(({ className, ty
             className
           )}
           onClick={copy}
+          aria-label="Copy"
           {...props}
         >
-          <div className={cn('text-ellipsis overflow-hidden whitespace-nowrap')}>{value}</div>
+          <div className={cn(`text-ellipsis overflow-hidden whitespace-nowrap`)}>{value}</div>
           <ClipboardCopy className="flex-shrink-0 opacity-50 h-4 w-4" />
         </div>
       </TooltipTrigger>
