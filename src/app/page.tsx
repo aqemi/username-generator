@@ -4,13 +4,15 @@ import { ThemeSwitch } from '@/components/theme-switch';
 import { Button } from '@/components/ui/button';
 
 import { GeneratorCard } from './generator-card';
-import { UuidGenerator } from '@/generators/uuid/uuid.generator';
+import { AnimeGenerator } from '@/generators/anime/anime.generator';
 import { VT323 } from 'next/font/google';
+import { UuidGenerator } from '@/generators/uuid/uuid.generator';
 
 const font = VT323({ weight: '400', subsets: ['latin'] });
 
 export default async function Home() {
   const generatedValues = {
+    anime: await new AnimeGenerator().generate(),
     uuid: await new UuidGenerator().generate(),
   };
 
