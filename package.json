@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate:anime-datasource": "nodemon scripts/generate-anime-datasource.ts"
+    "generate:anime-datasource": "nodemon scripts/generate-anime-datasource.ts",
+    "generate:metadata": "nodemon -e ts scripts/generate-metadata.ts"
   },
   "dependencies": {
     "@radix-ui/react-separator": "^1.0.3",
