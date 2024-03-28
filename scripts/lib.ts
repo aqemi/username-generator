@@ -15,7 +15,7 @@ export function datasourcesDir(filename: string) {
 export async function deduplicate(filepath: string) {
   const content = await fs.readFile(filepath, 'utf-8');
   const lines = content.split('\n');
-  const deduplicated =  [...new Set(lines)];
+  const deduplicated = [...new Set(lines)];
   const newContent = deduplicated.join('\n');
   await fs.writeFile(filepath, newContent, 'utf-8');
 }
