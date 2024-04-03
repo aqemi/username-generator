@@ -25,7 +25,6 @@ export class AnimeGenerator implements Generator<AnimeGeneratorResult> {
     let [lastNameFallback, lastName] = lastBase;
     lastName = this.format(lastName ? lastName : lastNameFallback);
     const fullName = this.format(fullBase.reverse().join(' '));
-
     return {
       firstName: this.format(firstName),
       lastName,

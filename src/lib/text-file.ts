@@ -4,7 +4,6 @@ import { datasourcesDir } from '../../scripts/lib';
 export async function getRandomLine(filename: string, totalSize: number, readBufferSize: number): Promise<string> {
   const filepath = datasourcesDir(filename);
   const handle = await fs.open(filepath, 'r');
-
   try {
     for (let i = 0; i < 10; i += 1) {
       const randomPos = Math.floor(Math.random() * totalSize);

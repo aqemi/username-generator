@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import type { Metadata } from 'next';
 import { Sono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
 
 import './globals.css';
 
@@ -54,7 +55,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={clsx('min-h-screen flex flex-col', font.className)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem enableColorScheme>
-          {children}
+          <main>{children}</main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
