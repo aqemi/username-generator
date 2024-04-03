@@ -8,8 +8,9 @@ import { Separator } from '@/components/ui/separator';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { type UuidGeneratorResult } from '@/generators/uuid/result.interface';
 import { AnimeGenerator } from '@/generators/anime/anime.generator';
-import {type  AnimeGeneratorResult } from '@/generators/anime/result.interface';
+import { type AnimeGeneratorResult } from '@/generators/anime/result.interface';
 import { UuidGenerator } from '@/generators/uuid/uuid.generator';
+import { toast } from '@/components/ui/use-toast';
 
 export interface GeneratorCardProps {
   anime: AnimeGeneratorResult;
@@ -26,9 +27,22 @@ export function GeneratorCard(props: GeneratorCardProps) {
     updateState({ uuid: result });
   };
 
+  const regenerateRequest = async <R = unknown,>(generator: 'anime' | 'neutral' | 'bible'): Promise<R | null> => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/generate/${generator}`);
+      return await response.json();
+    } catch (error) {
+      toast({
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem with your request.',
+      });
+      return null;
+    }
+  };
+
   const regenerateAnime = async () => {
-    const result = await new AnimeGenerator().generate();
-    updateState({ anime: result });
+    const result = await regenerateRequest<AnimeGeneratorResult>('anime');
+    result && updateState({ anime: result });
   };
 
   return (
