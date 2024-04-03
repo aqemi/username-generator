@@ -6,7 +6,7 @@ import { type AnimeGeneratorResult } from './result.interface';
 
 export class AnimeGenerator implements Generator<AnimeGeneratorResult> {
   private async fetchRandomCharacter(): Promise<string> {
-    return getRandomLine('anime.txt', metadata.anime.totalSize, metadata.anime.bufferSize);
+    return getRandomLine('anime.txt');
   }
 
   private split(base: string): [string, string | undefined] {
@@ -14,7 +14,7 @@ export class AnimeGenerator implements Generator<AnimeGeneratorResult> {
   }
 
   private format(input: string): string {
-    return input.replace(/ /g, '_');
+    return input;//.replace(/ /g, '_');
   }
 
   async generate() {

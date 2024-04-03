@@ -1,6 +1,10 @@
 {
-  "anime": {
+  "anime.txt": {
     "bufferSize": 104,
     "totalSize": 189652
+  },
+  "bible.txt": {
+    "bufferSize": 60,
+    "totalSize": 13846
   }
 }

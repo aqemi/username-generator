@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import { load } from 'cheerio';
-import { datasourcesDir, deduplicate, safeFetch } from './lib';
+import { deduplicate, safeFetch } from './lib';
+import { datasourcesDir } from '../src/lib/text-file';
 
 (async function () {
   const file = datasourcesDir('anime.txt');

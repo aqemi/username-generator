@@ -1,17 +1,12 @@
 import fs from 'fs/promises';
-import { datasourcesDir } from './lib';
-
-type SourceMetadata = {
-  bufferSize: number;
-  totalSize: number;
-};
+import { SourceMetadata, datasourcesDir } from '../src/lib/text-file';
 
 (async function () {
-  const sources = {
-    anime: datasourcesDir('anime.txt'),
-  };
+  const files = await fs.readdir(datasourcesDir(''));
+  const txtFiles = files.filter((x) => x.endsWith('.txt'));
 
-  const metadata = await Object.entries(sources).reduce(async (pre, [source, file]) => {
+  const metadata = await txtFiles.reduce(async (pre, filename) => {
+    const file = datasourcesDir(filename);
     const acc = await pre;
     const data = await fs.readFile(file, 'utf-8');
     const lines = data.split('\n');
@@ -25,7 +20,7 @@ type SourceMetadata = {
 
     return {
       ...acc,
-      [source]: {
+      [filename]: {
         bufferSize,
         totalSize: stats.size,
       },
