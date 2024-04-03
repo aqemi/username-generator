@@ -1,31 +1,27 @@
 'use client';
 
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
+
 import { Generator } from '@/components/generator';
 import { Card, CardContent } from '@/components/ui/card';
 import { Copyable } from '@/components/ui/copyable';
 import { Separator } from '@/components/ui/separator';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { type UuidGeneratorResult } from '@/generators/uuid/result.interface';
-import { AnimeGenerator } from '@/generators/anime/anime.generator';
-import { type AnimeGeneratorResult } from '@/generators/anime/result.interface';
-import { UuidGenerator } from '@/generators/uuid/uuid.generator';
 import { toast } from '@/components/ui/use-toast';
+import { type AnimeGeneratorResult } from '@/generators/anime/result.interface';
+import { BibleGeneratorResult } from '@/generators/bible/result.interface';
+import { type UuidGeneratorResult } from '@/generators/uuid/result.interface';
+import { UuidGenerator } from '@/generators/uuid/uuid.generator';
 
 export interface GeneratorCardProps {
   anime: AnimeGeneratorResult;
+  bible: BibleGeneratorResult;
   uuid: UuidGeneratorResult;
 }
 
 export function GeneratorCard(props: GeneratorCardProps) {
   const [state, setState] = useState(props);
-
   const updateState = (newState: Partial<GeneratorCardProps>) => setState({ ...state, ...newState });
-
-  const regenerateUuid = async () => {
-    const result = await new UuidGenerator().generate();
-    updateState({ uuid: result });
-  };
 
   const regenerateRequest = async <R = unknown,>(generator: 'anime' | 'neutral' | 'bible'): Promise<R | null> => {
     try {
@@ -45,6 +41,16 @@ export function GeneratorCard(props: GeneratorCardProps) {
     result && updateState({ anime: result });
   };
 
+  const regenerateBible = async () => {
+    const result = await regenerateRequest<BibleGeneratorResult>('bible');
+    result && updateState({ bible: result });
+  };
+
+  const regenerateUuid = async () => {
+    const result = await new UuidGenerator().generate();
+    updateState({ uuid: result });
+  };
+
   return (
     <Card className="w-full lg:w-[684px]">
       <CardContent className="p-4 space-y-4">
@@ -55,21 +61,8 @@ export function GeneratorCard(props: GeneratorCardProps) {
             <Copyable disabled type="text" value={state.anime.fullName} />
           </Generator>
           <Separator></Separator>
-          <Generator title="Bible" onRegenerate={() => {}}>
-            <Copyable
-              disabled
-              type="text"
-              value={
-                'Irure dolor magna velit irure ipsum irure.Irure dolor magna velit irure ipsum irure.Irure dolor magna velit irure ipsum irure.'
-              }
-            />
-            <Copyable
-              disabled
-              type="text"
-              value={
-                'Iruredolormagnavelitirureipsumirure.Iruredolormagnavelitirureipsumirure.Iruredolormagnavelitirureipsumirure.'
-              }
-            />
+          <Generator title="Bible" onRegenerate={regenerateBible}>
+            <Copyable disabled type="text" value={state.bible.name} />
           </Generator>
           <Separator></Separator>
           <Generator title="Neutral" onRegenerate={() => {}}></Generator>
