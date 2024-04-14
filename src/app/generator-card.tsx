@@ -9,13 +9,15 @@ import { Separator } from '@/components/ui/separator';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { toast } from '@/components/ui/use-toast';
 import { type AnimeGeneratorResult } from '@/generators/anime/result.interface';
-import { BibleGeneratorResult } from '@/generators/bible/result.interface';
+import { type BibleGeneratorResult } from '@/generators/bible/result.interface';
+import { type ElasticGeneratorResult } from '@/generators/elastic/result.interface';
 import { type UuidGeneratorResult } from '@/generators/uuid/result.interface';
 import { UuidGenerator } from '@/generators/uuid/uuid.generator';
 
 export interface GeneratorCardProps {
   anime: AnimeGeneratorResult;
   bible: BibleGeneratorResult;
+  elastic: ElasticGeneratorResult;
   uuid: UuidGeneratorResult;
 }
 
@@ -23,7 +25,7 @@ export function GeneratorCard(props: GeneratorCardProps) {
   const [state, setState] = useState(props);
   const updateState = (newState: Partial<GeneratorCardProps>) => setState({ ...state, ...newState });
 
-  const regenerateRequest = async <R = unknown,>(generator: 'anime' | 'neutral' | 'bible'): Promise<R | null> => {
+  const regenerateRequest = async <R = unknown,>(generator: 'anime' | 'elastic' | 'bible'): Promise<R | null> => {
     try {
       const response = await fetch(`http://localhost:3000/api/generate/${generator}`);
       return await response.json();
@@ -46,6 +48,11 @@ export function GeneratorCard(props: GeneratorCardProps) {
     result && updateState({ bible: result });
   };
 
+  const regenerateElastic = async () => {
+    const result = await regenerateRequest<BibleGeneratorResult>('bible');
+    result && updateState({ elastic: result });
+  };
+
   const regenerateUuid = async () => {
     const result = await new UuidGenerator().generate();
     updateState({ uuid: result });
@@ -65,7 +72,9 @@ export function GeneratorCard(props: GeneratorCardProps) {
             <Copyable disabled type="text" value={state.bible.name} />
           </Generator>
           <Separator></Separator>
-          <Generator title="Neutral" onRegenerate={() => {}}></Generator>
+          <Generator title="Neutral" onRegenerate={regenerateElastic}>
+            <Copyable disabled type="text" value={state.elastic.name} />
+          </Generator>
           <Separator></Separator>
           <Generator title="UUID" onRegenerate={regenerateUuid}>
             <Copyable disabled type="text" value={state.uuid.v4} />

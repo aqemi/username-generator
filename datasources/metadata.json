@@ -1,10 +1,14 @@
 {
   "anime.txt": {
     "bufferSize": 104,
-    "totalSize": 189652
+    "totalSize": 189654
   },
   "bible.txt": {
     "bufferSize": 60,
-    "totalSize": 13846
+    "totalSize": 13848
+  },
+  "elastic.txt": {
+    "bufferSize": 82,
+    "totalSize": 30121
   }
 }

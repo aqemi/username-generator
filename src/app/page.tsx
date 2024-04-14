@@ -3,11 +3,12 @@ import { Github } from 'lucide-react';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { Button } from '@/components/ui/button';
 
-import { GeneratorCard, GeneratorCardProps } from './generator-card';
 import { AnimeGenerator } from '@/generators/anime/anime.generator';
-import { VT323 } from 'next/font/google';
-import { UuidGenerator } from '@/generators/uuid/uuid.generator';
 import { BibleGenerator } from '@/generators/bible/bible.generator';
+import { ElasticGenerator } from '@/generators/elastic/elastic.generator';
+import { UuidGenerator } from '@/generators/uuid/uuid.generator';
+import { VT323 } from 'next/font/google';
+import { GeneratorCard, GeneratorCardProps } from './generator-card';
 
 const font = VT323({ weight: '400', subsets: ['latin'] });
 
@@ -15,6 +16,7 @@ export default async function Home() {
   const generatedValues: GeneratorCardProps = {
     anime: await new AnimeGenerator().generate(),
     bible: await new BibleGenerator().generate(),
+    elastic: await new ElasticGenerator().generate(),
     uuid: await new UuidGenerator().generate(),
   };
 
