@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import { load } from 'cheerio';
-import { deduplicate, safeFetch } from './lib';
+import { deduplicate, safeFetch, untrim } from './lib';
 import { datasourcesDir } from '../src/lib/text-file';
 
 (async function () {
@@ -34,4 +34,5 @@ import { datasourcesDir } from '../src/lib/text-file';
     page += 1;
   }
   await deduplicate(file);
+  await untrim(file);
 })();

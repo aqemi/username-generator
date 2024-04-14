@@ -9,6 +9,7 @@
     "lint": "next lint",
     "generate:anime-datasource": "nodemon scripts/generate-anime-datasource.ts",
     "generate:bible-datasource": "nodemon scripts/generate-bible-datasource.ts",
+    "generate:elastic-datasource": "nodemon scripts/generate-elastic-datasource.ts",
     "generate:metadata": "nodemon -e ts scripts/generate-metadata.ts"
   },
   "dependencies": {
