@@ -20,11 +20,12 @@ export function Generator({ title, children, onRegenerate }: GeneratorProps) {
       </h3>
       <Button
         variant="outline"
+        onClick={onRegenerate}
         size="icon"
         className="flex-shrink-0 md:ml-auto md:order-last opacity-50"
         aria-label="Regenerate"
       >
-        <RefreshCcw className="h-4 w-4" onClick={onRegenerate} />
+        <RefreshCcw className="h-4 w-4" />
       </Button>
       {children}
     </section>

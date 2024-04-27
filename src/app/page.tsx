@@ -24,7 +24,7 @@ export default async function Home() {
     <>
       <header className="flex items-center justify-end p-4 space-x-4">
         <Button variant="ghost" size="icon" aria-labelledby="ghlink">
-          <a href="google.com" target="_blank" aria-label="Github" id="ghlink">
+          <a href="https://github.com/aqemi/username-generator" target="_blank" aria-label="Github" id="ghlink">
             <Github />
           </a>
         </Button>

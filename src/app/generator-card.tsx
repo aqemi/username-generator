@@ -49,7 +49,7 @@ export function GeneratorCard(props: GeneratorCardProps) {
   };
 
   const regenerateElastic = async () => {
-    const result = await regenerateRequest<BibleGeneratorResult>('bible');
+    const result = await regenerateRequest<ElasticGeneratorResult>('elastic');
     result && updateState({ elastic: result });
   };
 
