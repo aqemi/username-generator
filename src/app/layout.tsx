@@ -1,9 +1,11 @@
-import clsx from 'clsx';
-import type { Metadata } from 'next';
-import { Sono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
+import clsx from 'clsx';
+import type { Metadata, Viewport } from 'next';
+import { Sono } from 'next/font/google';
 
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 const font = Sono({ weight: ['400', '700', '800'], subsets: ['latin'] });
@@ -44,6 +46,18 @@ export const metadata: Metadata = {
     description,
     type: 'website',
   },
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : 'http:localhost:3000'
+  ),
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -53,11 +67,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={clsx('min-h-screen flex flex-col', font.className)}>
+      <body className={clsx('min-h-screen h-screen flex flex-col p-4 select-none', font.className)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem enableColorScheme>
-          <main>{children}</main>
+          {children}
           <Toaster />
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -13,21 +13,23 @@ import { type BibleGeneratorResult } from '@/generators/bible/result.interface';
 import { type ElasticGeneratorResult } from '@/generators/elastic/result.interface';
 import { type UuidGeneratorResult } from '@/generators/uuid/result.interface';
 import { UuidGenerator } from '@/generators/uuid/uuid.generator';
+import { cn } from '@/lib/utils';
 
-export interface GeneratorCardProps {
+interface GeneratorPanelProps {
   anime: AnimeGeneratorResult;
   bible: BibleGeneratorResult;
   elastic: ElasticGeneratorResult;
   uuid: UuidGeneratorResult;
+  className?: string;
 }
 
-export function GeneratorCard(props: GeneratorCardProps) {
+export function GeneratorPanel(props: GeneratorPanelProps) {
   const [state, setState] = useState(props);
-  const updateState = (newState: Partial<GeneratorCardProps>) => setState({ ...state, ...newState });
+  const updateState = (newState: Partial<GeneratorPanelProps>) => setState({ ...state, ...newState });
 
   const regenerateRequest = async <R = unknown,>(generator: 'anime' | 'elastic' | 'bible'): Promise<R | null> => {
     try {
-      const response = await fetch(`http://localhost:3000/api/generate/${generator}`);
+      const response = await fetch(`/api/generate/${generator}`);
       return await response.json();
     } catch (error) {
       toast({
@@ -59,25 +61,26 @@ export function GeneratorCard(props: GeneratorCardProps) {
   };
 
   return (
-    <Card className="w-full lg:w-[684px]">
+    <Card className={cn(props.className)}>
       <CardContent className="p-4 space-y-4">
         <TooltipProvider>
-          <Generator title="Anime" onRegenerate={regenerateAnime}>
+          <Generator title="anime" onRegenerate={regenerateAnime}>
             <Copyable disabled type="text" value={state.anime.firstName} />
             <Copyable disabled type="text" value={state.anime.lastName} />
             <Copyable disabled type="text" value={state.anime.fullName} />
           </Generator>
           <Separator></Separator>
-          <Generator title="Bible" onRegenerate={regenerateBible}>
+          <Generator title="bible" onRegenerate={regenerateBible}>
             <Copyable disabled type="text" value={state.bible.name} />
           </Generator>
           <Separator></Separator>
-          <Generator title="Neutral" onRegenerate={regenerateElastic}>
+          <Generator title="neutral" onRegenerate={regenerateElastic}>
             <Copyable disabled type="text" value={state.elastic.name} />
           </Generator>
           <Separator></Separator>
-          <Generator title="UUID" onRegenerate={regenerateUuid}>
+          <Generator title="uuid" onRegenerate={regenerateUuid}>
             <Copyable disabled type="text" value={state.uuid.v4} />
+            <Copyable disabled type="text" value={state.uuid.short} />
           </Generator>
         </TooltipProvider>
       </CardContent>
