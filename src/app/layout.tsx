@@ -6,6 +6,7 @@ import { Sono } from 'next/font/google';
 
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import logo from './logo.png';
 import './globals.css';
 
 const font = Sono({ weight: ['400', '700', '800'], subsets: ['latin'] });
@@ -43,8 +44,9 @@ export const metadata: Metadata = {
   manifest: '/site.webmanifest',
   openGraph: {
     title,
-    description,
+    description: 'Generate unique and creative usernames effortlessly with our user-friendly username generator app',
     type: 'website',
+    images: logo.src,
   },
   metadataBase: new URL(
     process.env.VERCEL_PROJECT_PRODUCTION_URL
