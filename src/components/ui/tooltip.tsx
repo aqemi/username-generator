@@ -9,8 +9,6 @@ const Tooltip = TooltipPrimitive.Root;
 
 const TooltipTrigger = TooltipPrimitive.Trigger;
 
-const TooltipPortal = TooltipPrimitive.Portal;
-
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
@@ -37,7 +35,7 @@ const TooltipContext = React.createContext<TooltipContext>({
 
 const TooltipProvider = ({ children, ...props }: TooltipPrimitive.TooltipProviderProps) => {
   const [openTooltipId, setOpenTooltipId] = React.useState<string | null>();
-  const timeout = React.useRef<NodeJS.Timeout>();
+  const timeout = React.useRef<NodeJS.Timeout>(undefined);
   return (
     <TooltipContext.Provider
       value={{
@@ -54,4 +52,4 @@ const TooltipProvider = ({ children, ...props }: TooltipPrimitive.TooltipProvide
   );
 };
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, TooltipPortal, TooltipContext };
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, TooltipContext };

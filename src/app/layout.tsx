@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/sonner';
 import clsx from 'clsx';
 import type { Metadata, Viewport } from 'next';
 import { Sono } from 'next/font/google';
@@ -49,9 +49,7 @@ export const metadata: Metadata = {
     images: logo.src,
   },
   metadataBase: new URL(
-    process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : 'http:localhost:3000'
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http:localhost:3000'
   ),
 };
 
@@ -72,7 +70,7 @@ export default function RootLayout({
       <body className={clsx('min-h-screen h-screen flex flex-col p-4 select-none', font.className)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem enableColorScheme>
           {children}
-          <Toaster />
+          <Toaster richColors visibleToasts={1} />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />

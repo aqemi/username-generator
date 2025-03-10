@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Copyable } from '@/components/ui/copyable';
 import { Separator } from '@/components/ui/separator';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { type AnimeGeneratorResult } from '@/generators/anime/result.interface';
 import { type BibleGeneratorResult } from '@/generators/bible/result.interface';
 import { type ElasticGeneratorResult } from '@/generators/elastic/result.interface';
@@ -30,10 +30,10 @@ export function GeneratorPanel(props: GeneratorPanelProps) {
   const regenerateRequest = async <R = unknown,>(generator: 'anime' | 'elastic' | 'bible'): Promise<R | null> => {
     try {
       const response = await fetch(`/api/generate/${generator}`);
+      throw new Error('Uh oh! Something went wrong.');
       return await response.json();
     } catch (error) {
-      toast({
-        title: 'Uh oh! Something went wrong.',
+      toast.error('Uh oh! Something went wrong.', {
         description: 'There was a problem with your request.',
       });
       return null;
