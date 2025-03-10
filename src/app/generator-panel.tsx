@@ -12,6 +12,7 @@ import { type AnimeGeneratorResult } from '@/generators/anime/result.interface';
 import { type BibleGeneratorResult } from '@/generators/bible/result.interface';
 import { type ElasticGeneratorResult } from '@/generators/elastic/result.interface';
 import { type UuidGeneratorResult } from '@/generators/uuid/result.interface';
+import { type GachaGeneratorResult } from '@/generators/gacha/result.interface';
 import { UuidGenerator } from '@/generators/uuid/uuid.generator';
 import { cn } from '@/lib/utils';
 
@@ -19,6 +20,7 @@ interface GeneratorPanelProps {
   anime: AnimeGeneratorResult;
   bible: BibleGeneratorResult;
   elastic: ElasticGeneratorResult;
+  gacha: GachaGeneratorResult;
   uuid: UuidGeneratorResult;
   className?: string;
 }
@@ -27,10 +29,9 @@ export function GeneratorPanel(props: GeneratorPanelProps) {
   const [state, setState] = useState(props);
   const updateState = (newState: Partial<GeneratorPanelProps>) => setState({ ...state, ...newState });
 
-  const regenerateRequest = async <R = unknown,>(generator: 'anime' | 'elastic' | 'bible'): Promise<R | null> => {
+  const regenerateRequest = async <R = unknown,>(generator: 'anime' | 'elastic' | 'bible' | 'gacha'): Promise<R | null> => {
     try {
       const response = await fetch(`/api/generate/${generator}`);
-      throw new Error('Uh oh! Something went wrong.');
       return await response.json();
     } catch (error) {
       toast.error('Uh oh! Something went wrong.', {
@@ -55,6 +56,11 @@ export function GeneratorPanel(props: GeneratorPanelProps) {
     result && updateState({ elastic: result });
   };
 
+  const regenerateAi = async () => {
+    const result = await regenerateRequest<GachaGeneratorResult>('gacha');
+    result && updateState({ gacha: result });
+  };
+
   const regenerateUuid = async () => {
     const result = await new UuidGenerator().generate();
     updateState({ uuid: result });
@@ -76,6 +82,10 @@ export function GeneratorPanel(props: GeneratorPanelProps) {
           <Separator></Separator>
           <Generator title="neutral" onRegenerate={regenerateElastic}>
             <Copyable disabled type="text" value={state.elastic.name} />
+          </Generator>
+          <Separator></Separator>
+          <Generator title="AI" onRegenerate={regenerateAi}>
+            {state.gacha.items.length && state.gacha.items.map((item, index) => <Copyable key={index} disabled type="text" value={item} />)}
           </Generator>
           <Separator></Separator>
           <Generator title="uuid" onRegenerate={regenerateUuid}>

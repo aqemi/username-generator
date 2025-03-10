@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import metadata from '../../datasources/metadata.json';// assert { type: 'json' };
+import metadata from '../../datasources/metadata.json' assert { type: 'json' };
 
 export type Source = keyof typeof metadata;
 export type SourceMetadata = {

@@ -19,6 +19,7 @@ export default async function Home() {
     anime: await new AnimeGenerator().generate(),
     bible: await new BibleGenerator().generate(),
     elastic: await new ElasticGenerator().generate(),
+    gacha: { items: [] },
     uuid: await new UuidGenerator().generate(),
   };
   return (

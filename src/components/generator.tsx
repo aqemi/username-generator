@@ -15,9 +15,7 @@ const font = VT323({ weight: '400', subsets: ['latin'] });
 export function Generator({ title, children, onRegenerate }: GeneratorProps) {
   return (
     <section className="flex items-center gap-4 group flex-wrap md:flex-nowrap">
-      <h3 className={`${font.className} scroll-m-20 text-4xl tracking-tight min-w-[calc(100%_-_3.5rem)] md:min-w-24`}>
-        {title}
-      </h3>
+      <h3 className={`${font.className} scroll-m-20 text-4xl tracking-tight min-w-[calc(100%_-_3.5rem)] md:min-w-24`}>{title}</h3>
       <Button
         variant="outline"
         onClick={onRegenerate}
@@ -27,7 +25,7 @@ export function Generator({ title, children, onRegenerate }: GeneratorProps) {
       >
         <RefreshCcw className="h-4 w-4" />
       </Button>
-      {children}
+      {children || <div className="flex items-center px-3 text-sm selection:bg-amber-900">Click to generate</div>}
     </section>
   );
 }
