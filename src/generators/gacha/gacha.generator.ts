@@ -1,6 +1,7 @@
 import { Mistral } from '@mistralai/mistralai';
 import { type Generator } from '../generator.interface';
 import { type GachaGeneratorResult } from './result.interface';
+import { randomElements } from '@/lib/utils';
 
 export class GachaGenerator implements Generator<GachaGeneratorResult> {
   async generate() {
@@ -9,7 +10,7 @@ export class GachaGenerator implements Generator<GachaGeneratorResult> {
     });
     const { choices } = await mistral.agents.complete({
       agentId: process.env.GACHA_AGENT_ID!,
-      messages: [{ role: 'user', content: `Generate 3 items as JSON array of strings. Random seed: ${crypto.randomUUID()}` }],
+      messages: [{ role: 'user', content: `Generate 50 items as JSON array of strings. Random seed: ${crypto.randomUUID()}` }],
       responseFormat: { type: 'json_object' },
     });
 
@@ -17,7 +18,7 @@ export class GachaGenerator implements Generator<GachaGeneratorResult> {
     if (typeof content === 'string') {
       const parsed = this.parseAiResponse(content);
       return {
-        items: parsed.slice(0, 3),
+        items: randomElements(parsed, 3),
       };
     } else {
       throw new Error(`Error parsing AI response: content is not a string ${content}`);
